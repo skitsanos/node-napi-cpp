@@ -1,0 +1,24 @@
+{
+  "name": "demo1",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": {
+    "name": "Skitsanos",
+    "url": "https://skitsanos.com"
+  },
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "compile": "cmake-js compile",
+    "exec": "yarn run compile && node ./src-js/index.js"
+  },
+  "cmake-js": {
+    "runtime": "node",
+    "arch": "x64"
+  },
+  "dependencies": {
+    "cmake-js": "^6.2.1",
+    "node-addon-api": "^4.0.0",
+    "node-cmake": "^2.5.1"
+  }
+}
