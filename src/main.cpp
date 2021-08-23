@@ -30,7 +30,7 @@ Napi::Number methodWithArguments(const Napi::CallbackInfo &args) {
     return Napi::Number::New(env, result);
 }
 
-void methodLitInternals(const Napi::CallbackInfo &args) {
+void methodListInternals(const Napi::CallbackInfo &args) {
     Napi::Env env = args.Env();
 
     auto global = env.Global().Get("global").As<Napi::Object>();
@@ -87,24 +87,22 @@ Napi::Object CreateObject(const Napi::CallbackInfo &args) {
         Napi::TypeError::New(env, "{require} Function expected").ThrowAsJavaScriptException();
     }
 
-    //returns source of the function:
-    //require.ToString().Utf8Value()
-
-
     obj.Set(Napi::String::New(env, "hello"), Napi::Function::New(env, methodHelloWorld));
 
     return obj;
 }
 
 Napi::Object Init(Napi::Env env, Napi::Object exports) {
-    /*exports.Set(Napi::String::New(env, "hello"), Napi::Function::New(env, methodHelloWorld));
+    //static methods within add-on
+    exports.Set(Napi::String::New(env, "listInternals"), Napi::Function::New(env, methodListInternals));
+    exports.Set(Napi::String::New(env, "hello"), Napi::Function::New(env, methodHelloWorld));
     exports.Set(Napi::String::New(env, "add"), Napi::Function::New(env, methodWithArguments));
-    exports.Set(Napi::String::New(env, "listInternals"), Napi::Function::New(env, methodLitInternals));
-    exports.Set(Napi::String::New(env, "callRequire"), Napi::Function::New(env, methodAcceptsRequire));*/
+    exports.Set(Napi::String::New(env, "callRequire"), Napi::Function::New(env, methodAcceptsRequire));
 
     //return exports;
     //return Napi::Function::New(env, CreateObject, "addon");
 
+    //new class within add-on that has own methods
     Napi::String name = Napi::String::New(env, "DemoClass");
     exports.Set(name, DemoClass::GetClass(env));
     return exports;

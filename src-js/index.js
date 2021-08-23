@@ -1,24 +1,19 @@
-const addon = require('../build/Release/demo').DemoClass;
+const addon = require('../build/Release/demo');
 const welcome = require('./hi');
 
-const demo = new addon(require)
+const demo = new addon.DemoClass(require);
 
-console.log(demo)
+console.log('NAPI Internals:');
+addon.listInternals();
 
 console.log(Object.keys(demo).map(el => ({[el]: typeof demo[el]})));
 
-console.log(demo.sayHi())
+console.log(demo.sayHi());
 
-/*
+console.log('c++', addon.hello());
 
+console.log('c++', addon.add(10.25, 2));
 
-console.log('c++', demo.hello());
+console.log(welcome(), typeof welcome);
 
-console.log('c++', demo.add(10.25, 2));
-
-console.log(welcome(), typeof welcome)
-
-console.log('NAPI Internals:');
-demo.listInternals();
-
-console.log('c++', demo.callRequire(require))*/
+console.log('c++', addon.callRequire(require));
