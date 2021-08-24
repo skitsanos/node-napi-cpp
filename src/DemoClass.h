@@ -1,6 +1,8 @@
-//
-// Created by EviK on 8/19/2021.
-//
+/**
+ *
+ * @author skitsanos, http://github.com/skitsanos
+ * @version 1.0.2
+ */
 
 #ifndef DEMO_DEMOCLASS_H
 #define DEMO_DEMOCLASS_H
