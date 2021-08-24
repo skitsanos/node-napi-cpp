@@ -12,14 +12,17 @@
 #include "iostream"
 #include "DemoClass.h"
 
-Napi::String methodHelloWorld(const Napi::CallbackInfo &args) {
+Napi::String methodHelloWorld(const Napi::CallbackInfo &args)
+{
     Napi::Env env = args.Env();
     return Napi::String::New(env, "hello world!");
 }
 
-Napi::Number methodWithArguments(const Napi::CallbackInfo &args) {
+Napi::Number methodWithArguments(const Napi::CallbackInfo &args)
+{
     Napi::Env env = args.Env();
-    if (args.Length() < 2 || !args[0].IsNumber() || !args[1].IsNumber()) {
+    if (args.Length() < 2 || !args[0].IsNumber() || !args[1].IsNumber())
+    {
         Napi::TypeError::New(env, "Number expected").ThrowAsJavaScriptException();
     }
 
@@ -30,14 +33,16 @@ Napi::Number methodWithArguments(const Napi::CallbackInfo &args) {
     return Napi::Number::New(env, result);
 }
 
-void methodListInternals(const Napi::CallbackInfo &args) {
+void methodListInternals(const Napi::CallbackInfo &args)
+{
     Napi::Env env = args.Env();
 
     auto global = env.Global().Get("global").As<Napi::Object>();
 
     auto props = global.GetPropertyNames();
 
-    for (uint32_t i = 0; i < props.Length(); i++) {
+    for (uint32_t i = 0; i < props.Length(); i++)
+    {
         std::cout << "\t- " << props.Get(i).ToString().Utf8Value() << "\n";
     }
 }
@@ -48,16 +53,19 @@ void methodListInternals(const Napi::CallbackInfo &args) {
  * @param args
  * @return
  */
-Napi::String methodAcceptsRequire(const Napi::CallbackInfo &args) {
+Napi::String methodAcceptsRequire(const Napi::CallbackInfo &args)
+{
     Napi::Env env = args.Env();
-    if (args.Length() < 1 || !args[0].IsFunction()) {
+    if (args.Length() < 1 || !args[0].IsFunction())
+    {
         Napi::TypeError::New(env, "Function expected").ThrowAsJavaScriptException();
     }
 
     Napi::Function cb = args[0].As<Napi::Function>();
     Napi::Value module = cb.Call(env.Global(), {Napi::String::New(env, "./hi")});
 
-    if (module.IsUndefined() || !module.IsFunction()) {
+    if (module.IsUndefined() || !module.IsFunction())
+    {
         Napi::TypeError::New(env, "Module undefined").ThrowAsJavaScriptException();
     }
 
@@ -67,11 +75,13 @@ Napi::String methodAcceptsRequire(const Napi::CallbackInfo &args) {
     return result;
 }
 
-Napi::Object CreateObject(const Napi::CallbackInfo &args) {
+Napi::Object CreateObject(const Napi::CallbackInfo &args)
+{
     Napi::Env env = args.Env();
     Napi::Object obj = Napi::Object::New(env);
 
-    if (args.Length() < 1 || !args[0].IsFunction()) {
+    if (args.Length() < 1 || !args[0].IsFunction())
+    {
         Napi::TypeError::New(env, "Function expected").ThrowAsJavaScriptException();
     }
 
@@ -83,7 +93,8 @@ Napi::Object CreateObject(const Napi::CallbackInfo &args) {
     std::regex self_regex("^function require\\(path\\)",
                           std::regex_constants::ECMAScript | std::regex_constants::icase);
 
-    if (!std::regex_search(require.ToString().Utf8Value().c_str(), self_regex)) {
+    if (!std::regex_search(require.ToString().Utf8Value().c_str(), self_regex))
+    {
         Napi::TypeError::New(env, "{require} Function expected").ThrowAsJavaScriptException();
     }
 
@@ -92,7 +103,8 @@ Napi::Object CreateObject(const Napi::CallbackInfo &args) {
     return obj;
 }
 
-Napi::Object Init(Napi::Env env, Napi::Object exports) {
+Napi::Object Init(Napi::Env env, Napi::Object exports)
+{
     //static methods within add-on
     exports.Set(Napi::String::New(env, "listInternals"), Napi::Function::New(env, methodListInternals));
     exports.Set(Napi::String::New(env, "hello"), Napi::Function::New(env, methodHelloWorld));
