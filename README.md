@@ -24,7 +24,6 @@ Tested on Node.js 12, 14 and 16, configuration made in a way that it usses `node
 ```js
 const addon = require('../build/Release/demo');
 const demo = new addon.DemoClass(require);
-...
 ```
 
 So let's say you have a JavaScript module `hi.js` that will be called in DemoClass:
