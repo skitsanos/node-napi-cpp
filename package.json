@@ -18,7 +18,7 @@
   },
   "dependencies": {
     "cmake-js": "^7.2.1",
-    "node-addon-api": "^7.0.0",
+    "node-addon-api": "^8.0.0",
     "node-cmake": "^2.5.1"
   }
 }
